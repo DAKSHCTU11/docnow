@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lab Test Scheduling Form</title>
   <style>
-    body {background-image: url("/Images/labtest.jpg");
-    
+    body {
+      background-image: url("/Images/labtest.jpg");
       font-family: Arial, sans-serif;
       background-color: #f4f4f4;
       margin: 0;
@@ -42,7 +42,9 @@
       border-radius: 4px;
       border: 1px solid #ccc;
       margin-bottom: 20px;
-      box-sizing: border-box; }
+      box-sizing: border-box;
+    }
+
     select {
       width: 100%;
       padding: 10px;
@@ -52,7 +54,8 @@
       box-sizing: border-box; 
     }
 
-    button[type="submit"],button[type="button"] {
+    button[type="submit"],
+    button[type="button"] {
       background-color: #007bff;
       color: #fff;
       border: none;
@@ -62,22 +65,21 @@
       transition: background-color 0.3s ease;
     }
 
-    button[type="submit"]:hover {
-      background-color: #0056b3;
-    }
+    button[type="submit"]:hover,
     button[type="button"]:hover {
       background-color: #0056b3;
     }
-    a{
-            color: white;
-            text-decoration: none;
-        }
+
+    a {
+      color: white;
+      text-decoration: none;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Lab Test Scheduling Form</h1>
-    <form method="POST">
+    <form id="labTestForm" method="POST" onsubmit="return validateForm()">
       <div>
         <label for="full_name">Full Name:</label>
         <input type="text" id="full_name" name="full_name" required placeholder="Enter Your Name">
@@ -102,7 +104,6 @@
           <option value="Urine Test">Urine Test</option>
           <option value="X-Ray">X-Ray</option>
           <option value="MRI">MRI</option>
-       
         </select>
       </div>
       <div>
@@ -110,16 +111,68 @@
         <input type="date" id="preferred_date" name="preferred_date" required>
       </div>
       <div>
-        <label for="preferred_date">Preferred Test Time:</label>
-        <input type="time" id="preferred_date" name="preferred_date" required>
+        <label for="preferred_time">Preferred Test Time:</label>
+        <input type="time" id="preferred_time" name="preferred_time" required>
       </div><br>
       <div>
         <label for="additional_info">Any Specific Allergy:</label>
-        <textarea id="additional_info" name="" rows="4"></textarea>
+        <textarea id="additional_info" name="additional_info" rows="4"></textarea>
       </div>
       <button type="submit">Submit Appointment Request</button>
       <button type="button"><a href="mainpage.html" id="home">Go Home</a></button>
     </form>
   </div>
+
+  <script>
+    function validateForm() {
+      var fullName = document.getElementById('full_name').value;
+      var email = document.getElementById('email').value;
+      var phone = document.getElementById('phone').value;
+      var dob = document.getElementById('dob').value;
+      var testType = document.getElementById('test_type').value;
+      var preferredDate = document.getElementById('preferred_date').value;
+      var preferredTime = document.getElementById('preferred_time').value;
+
+      if (fullName === "") {
+        alert("Please enter your full name.");
+        return false;
+      }
+
+      var emailPattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+      if (!emailPattern.test(email)) {
+        alert("Please enter a valid email address.");
+        return false;
+      }
+
+      var phonePattern = /^\d{10}$/;
+      if (!phonePattern.test(phone)) {
+        alert("Please enter a 10-digit phone number.");
+        return false;
+      }
+
+
+      if (dob === "") {
+        alert("Please select your date of birth.");
+        return false;
+      }
+
+      if (testType === "") {
+        alert("Please select a test type.");
+        return false;
+      }
+
+      if (preferredDate === "") {
+        alert("Please select your preferred test date.");
+        return false;
+      }
+
+      if (preferredTime === "") {
+        alert("Please select your preferred test time.");
+        return false;
+      }
+
+      return true; 
+    }
+  </script>
 </body>
 </html>
