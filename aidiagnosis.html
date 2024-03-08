@@ -48,7 +48,7 @@
 
     input[type="checkbox"] {
       display: inline-block;
-      margin-right: 10px; /* Add space between checkboxes */
+      margin-right: 10px;
     }
 
     button {
@@ -76,7 +76,7 @@
 <body>
   <div class="container">
     <h2>AI Disease Diagnosis Form</h2>
-    <form id="diagnosisForm">
+    <form id="diagnosisForm" onsubmit="return validateForm()">
       <div class="form-group">
         <label for="name">Name:</label>
         <input type="text" id="name" name="name" required>
@@ -132,5 +132,47 @@
       <button type="submit">Submit</button>
     </form>
   </div>
+  <script>
+    function validateForm() {
+      var name = document.getElementById('name').value;
+      var age = document.getElementById('age').value;
+      var gender = document.getElementById('gender').value;
+      var email = document.getElementById('email').value;
+      var phone = document.getElementById('phone').value;
+      var symptoms = document.querySelectorAll('input[name="symptoms"]:checked').length;
+      var allergies = document.getElementById('allergies').value;
+      var consent = document.getElementById('consent').checked;
+
+      if (name.trim() === "") {
+        alert("Please enter your name.");
+        return false;
+      }
+
+      if (age <= 0 || isNaN(age)) {
+        alert("Please enter a valid age.");
+        return false;
+      }
+
+      if (gender === "") {
+        alert("Please select your gender.");
+        return false;
+      }
+
+      if (!/^\d{3}-\d{3}-\d{4}$/.test(phone)) {
+        alert("Please enter a valid phone number in the format XXX-XXX-XXXX.");
+        return false;
+      }
+
+      if (symptoms === 0) {
+        alert("Please select at least one symptom.");
+        return false;
+      }
+
+      
+
+      return true;
+    }
+  </script>
 </body>
 </html>
+
